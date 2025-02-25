@@ -4,12 +4,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ShoppingCard {
-    public void checkout(){
+    public void checkout(String status){
         // Logging
         // Authentication & Authorization
         // Sanitize the Data
 
-        System.out.println("Checkout Method from ShoppingCard");
+        System.out.println("Checkout Method from ShoppingCard called");
 
     }
 }

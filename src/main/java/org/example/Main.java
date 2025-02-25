@@ -10,6 +10,6 @@ public class Main {
         ApplicationContext context = new AnnotationConfigApplicationContext(BeanConfig.class);
 
         ShoppingCard card = context.getBean(ShoppingCard.class);
-        card.checkout();
+        card.checkout("Cancelled");
     }
 }
