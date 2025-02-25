@@ -12,4 +12,8 @@ public class ShoppingCard {
         System.out.println("Checkout Method from ShoppingCard called");
 
     }
+
+    public int quantity(){
+        return 2;
+    }
 }
