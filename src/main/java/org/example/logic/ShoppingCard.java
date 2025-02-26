@@ -1,4 +1,4 @@
-package org.example;
+package org.example.logic;
 
 import org.springframework.stereotype.Component;
 

@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.aspects.AuthenticationAspect;
+import org.example.config.BeanConfig;
+import org.example.logic.ShoppingCard;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

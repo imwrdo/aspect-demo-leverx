@@ -1,4 +1,4 @@
-package org.example;
+package org.example.aspects;
 
 
 import org.aspectj.lang.annotation.Aspect;
@@ -25,7 +25,7 @@ public class AuthenticationAspect {
         System.out.println("[Before] Authenticating & authorization request");
     }
 
-    @Before("execution(* org.example.ShoppingCard.checkout(..))")
+    @Before("execution(* org.example.logic.ShoppingCard.checkout(..))")
     public void checkRole() {
         if (!"ADMIN".equals(userRole)) {
             throw new RuntimeException("Unauthorized access: admin role required");
@@ -33,7 +33,7 @@ public class AuthenticationAspect {
         System.out.println("[Auth] User " + currentUser + " with role " + userRole + " authorized");
     }
 
-    @Before("execution(* org.example.ShoppingCard.updateInventory(..))")
+    @Before("execution(* org.example.logic.ShoppingCard.updateInventory(..))")
     public void checkInventoryAccess() {
         if (!"ADMIN".equals(userRole)) {
             throw new RuntimeException("Inventory updates require admin privileges");
@@ -41,7 +41,7 @@ public class AuthenticationAspect {
         System.out.println("[Security] Inventory update authorized for user: " + currentUser);
     }
 
-    @Before("execution(* org.example.ShoppingCard.calculateTotal(..))")
+    @Before("execution(* org.example.logic.ShoppingCard.calculateTotal(..))")
     public void logPriceCheck() {
         System.out.println("[Security] Price calculation requested by user: " + currentUser);
     }
