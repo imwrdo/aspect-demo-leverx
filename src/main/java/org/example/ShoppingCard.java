@@ -2,18 +2,34 @@ package org.example;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class ShoppingCard {
-    public void checkout(String status){
-        // Logging
-        // Authentication & Authorization
-        // Sanitize the Data
+    public void checkout(String status) {
 
-        System.out.println("Checkout Method from ShoppingCard called");
-
+        if ("INVALID".equals(status)) {
+            throw new RuntimeException("Invalid checkout status");
+        }
+        System.out.println("\nCheckout Method from ShoppingCard is called\n");
     }
 
-    public int quantity(){
-        return 2;
+
+    public double calculateTotal(double price, int quantity) {
+        return price * quantity;
+    }
+
+    public void updateInventory(String productId, int quantity) {
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
+        System.out.println("\nUpdating inventory for product: " + productId);
+    }
+
+    public Optional<String> getOrderStatus(String orderId) {
+        if (orderId == null) {
+            return Optional.empty();
+        }
+        return "Processing".describeConstable();
     }
 }
