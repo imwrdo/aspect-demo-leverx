@@ -1,8 +1,7 @@
 package org.example;
 
-import org.example.aspects.AuthenticationAspect;
 import org.example.config.BeanConfig;
-import org.example.logic.ShoppingCard;
+import org.example.logic.ShoppingCardLogic;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -11,14 +10,11 @@ import java.util.Optional;
 public class Main {
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(BeanConfig.class);
-        ShoppingCard card = context.getBean(ShoppingCard.class);
-
-        // Root permissions. If you don't have admin user, program will throw exception :)
-        AuthenticationAspect.setCurrentUser("admin","ADMIN");
+        ShoppingCardLogic card = context.getBean(ShoppingCardLogic.class);
 
         // Test existing functionality
         try{
-            // If invalid, throws exeption
+            // If invalid, throws exception
             card.checkout("VALID");
         }catch(RuntimeException e){
             System.out.println("\nError: " + e.getMessage());

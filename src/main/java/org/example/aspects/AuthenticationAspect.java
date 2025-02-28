@@ -1,18 +1,18 @@
 package org.example.aspects;
 
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
-
+@Slf4j
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class AuthenticationAspect {
-
-    private static String currentUser;
-    private static String userRole;
 
     @Pointcut("within(org.example..*)")
     public void authenticatingPointCut() {}
@@ -22,32 +22,21 @@ public class AuthenticationAspect {
 
     @Before("authenticatingPointCut() && authorizationPointCut()")
     public void authenticate(){
-        System.out.println("[Before] Authenticating & authorization request");
+        log.info("[Before] Authenticating & authorization request");
     }
 
-    @Before("execution(* org.example.logic.ShoppingCard.checkout(..))")
-    public void checkRole() {
-        if (!"ADMIN".equals(userRole)) {
-            throw new RuntimeException("Unauthorized access: admin role required");
-        }
-        System.out.println("[Auth] User " + currentUser + " with role " + userRole + " authorized");
+    @Before("execution(* org.example.logic.ShoppingCardLogic.checkout(..)) && args(status)")
+    public void checkRole(String status) {
+        System.out.println("[Security] Checkout operation requested with status: " + status);
     }
 
-    @Before("execution(* org.example.logic.ShoppingCard.updateInventory(..))")
-    public void checkInventoryAccess() {
-        if (!"ADMIN".equals(userRole)) {
-            throw new RuntimeException("Inventory updates require admin privileges");
-        }
-        System.out.println("[Security] Inventory update authorized for user: " + currentUser);
+    @Before(value = "execution(* org.example.logic.ShoppingCardLogic.updateInventory(..)) && args(productId)", argNames = "productId")
+    public void checkInventoryAccess(String productId) {
+        System.out.println("[Security] Inventory update requested for product: " + productId);
     }
 
-    @Before("execution(* org.example.logic.ShoppingCard.calculateTotal(..))")
-    public void logPriceCheck() {
-        System.out.println("[Security] Price calculation requested by user: " + currentUser);
-    }
-
-    public static void setCurrentUser(String user, String role) {
-        currentUser = user;
-        userRole = role;
+    @Before(value = "execution(* org.example.logic.ShoppingCardLogic.calculateTotal(..)) && args(price, quantity)", argNames = "price,quantity")
+    public void logPriceCheck(double price, int quantity) {
+        System.out.println("[Security] Price calculation requested for " + quantity + " items at " + price + " each");
     }
 }

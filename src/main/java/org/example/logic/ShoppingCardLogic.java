@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class ShoppingCard {
+public class ShoppingCardLogic {
     public void checkout(String status) {
 
         if ("INVALID".equals(status)) {
             throw new RuntimeException("Invalid checkout status");
         }
-        System.out.println("\nCheckout Method from ShoppingCard is called\n");
+        System.out.println("\nCheckout Method from ShoppingCardLogic is called\n");
     }
 
 
