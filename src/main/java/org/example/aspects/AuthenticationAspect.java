@@ -26,7 +26,7 @@ public class AuthenticationAspect {
     }
 
     @Before("execution(* org.example.logic.ShoppingCardLogic.checkout(..)) && args(status)")
-    public void checkRole(String status) {
+    public void checkCheckoutStatus(String status) {
         System.out.println("[Security] Checkout operation requested with status: " + status);
     }
 
